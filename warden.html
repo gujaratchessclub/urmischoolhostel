@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Warden details – Warden Desk</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#12264a;--mute:#5a6a85;--paper:#f2f5f9;--line:#d8dfea;--gold:#f2a900;--green:#12805c;--gbg:#dcf2e8;--red:#c23b32;--rbg:#fbe3e0;--r:14px}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "Nunito Sans",system-ui,sans-serif}
+h1,h2,.brand,.rm,.big{font-family:Sora,system-ui,sans-serif}
+h1{font-size:1.75rem;line-height:1.2;margin:.1em 0 .3em;letter-spacing:-.02em}
+h2{font-size:1.15rem;margin:0 0 12px}
+.sub{color:var(--mute);margin:0}
+a{color:var(--ink)}
+
+/* top bar */
+.top{background:var(--ink);position:sticky;top:0;z-index:30}
+.top-in{max-width:1100px;margin:auto;display:flex;align-items:center;gap:14px;padding:10px 16px}
+.brand{color:#fff;font-weight:700;white-space:nowrap}.brand b{color:var(--gold)}
+nav{display:flex;gap:2px;flex:1;overflow-x:auto}
+nav a{color:#c4d0e6;text-decoration:none;padding:6px 12px;border-radius:8px;white-space:nowrap;font-size:.94rem}
+nav a:hover{color:#fff}nav a.on{background:rgba(255,255,255,.14);color:#fff}
+.out{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:5px 12px;cursor:pointer;font:inherit;font-size:.9rem}
+main{max-width:1100px;margin:auto;padding:22px 16px 110px}
+
+/* cards + forms */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.narrow{max-width:680px}
+label.f{display:block;margin-bottom:16px;font-weight:600;font-size:.93rem}
+.f input,.f textarea,.bar input{display:block;width:100%;margin-top:6px;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
+input:focus,textarea:focus{outline:3px solid rgba(242,169,0,.45);border-color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 16px}
+fieldset{border:0;padding:0;margin:0 0 18px}
+legend{font-weight:600;font-size:.93rem;margin-bottom:8px;padding:0}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills label{position:relative}
+.pills input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.pills span{display:grid;place-items:center;min-width:50px;height:50px;padding:0 16px;border:2px solid var(--line);border-radius:12px;background:#fff;font-weight:700;transition:.12s}
+.pills input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
+.pills input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:11px;padding:12px 22px;font:inherit;font-weight:700;background:var(--ink);color:#fff;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.15)}.btn:disabled{opacity:.5}
+.btn.gold{background:var(--gold);color:#1a2236}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.danger{background:#fff;color:var(--red);border:1.5px solid #efc3bf}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.bar input{margin:0;width:auto;min-width:190px}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:11px;overflow:hidden;background:#fff}
+.seg button{border:0;background:none;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;color:var(--mute)}
+.seg button.on{background:var(--ink);color:#fff}
+
+/* tables */
+.tw{overflow:auto;border:1px solid var(--line);border-radius:var(--r);background:#fff;max-height:70vh}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:#e9eef6;font-size:.86rem;color:var(--mute);position:sticky;top:0;z-index:2}
+tr.rs td{border-top:3px solid var(--ink)}
+.lt tbody tr:hover td{background:#f7f9fc}
+.empty{text-align:center;color:var(--mute);padding:30px}
+.rm{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--ink);color:#fff;font-weight:700;font-size:.95rem;margin-right:6px}
+.chip{display:inline-block;padding:2px 10px;border-radius:99px;font-weight:700;font-size:.85rem}
+.chip.r{background:#e6ebf4;color:var(--ink)}.chip.d{background:#fff0c9;color:#7a5200}
+.lnk{background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px;cursor:pointer}
+.note{color:var(--mute);font-size:.9rem;margin-top:12px}
+
+/* attendance */
+.arow{display:flex;align-items:center;gap:14px;padding:12px 16px;background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.arow.miss{border-color:var(--red);background:#fff8f7}
+.arow .nm{flex:1;font-weight:700}.arow small{display:block;font-weight:400;color:var(--mute)}
+.pa{display:flex;gap:8px}
+.pa label{position:relative}
+.pa input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.pa span{display:grid;place-items:center;width:64px;height:48px;border-radius:12px;border:2px solid var(--line);font:700 1.1rem Sora,sans-serif;color:var(--mute);background:#fff}
+.pa .p input:checked+span{background:var(--green);border-color:var(--green);color:#fff}
+.pa .a input:checked+span{background:var(--red);border-color:var(--red);color:#fff}
+.pa input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.dock{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 16px;z-index:25}
+.dock-in{max-width:1100px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tally{flex:1;font-weight:700;min-width:180px}
+.tally i{font-style:normal;color:var(--green)}.tally u{text-decoration:none;color:var(--red)}
+
+/* report */
+.pc{text-align:center!important;font-weight:700}
+td.P{color:var(--green);background:var(--gbg)}td.A{color:var(--red);background:var(--rbg)}td.n{color:#b0b9c9}
+.sticky{position:sticky;left:0;background:#fff;z-index:1}
+th.sticky{background:#e9eef6;z-index:3}
+.ft td{background:#e9eef6;font-weight:700}
+.dh{font:700 1rem Sora,sans-serif;color:var(--ink);text-decoration:none}
+
+/* home */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0 24px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px 18px}
+.stat .big{font-size:1.9rem;font-weight:700;line-height:1.15}.stat span{color:var(--mute);font-size:.9rem}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:14px}
+.tile{display:block;text-decoration:none;background:#fff;border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:var(--r);padding:20px;transition:.15s}
+.tile:hover{transform:translateY(-2px);border-left-color:var(--ink)}
+.tile b{display:block;font:700 1.15rem Sora,sans-serif;margin-bottom:4px}.tile small{color:var(--mute)}
+.tile.sec{border-left-color:var(--line)}
+
+/* profile card */
+dialog{border:0;border-radius:18px;padding:0;width:min(440px,92vw);box-shadow:0 20px 60px rgba(18,38,74,.35);color:var(--ink)}
+dialog::backdrop{background:rgba(18,38,74,.55)}
+.pf-h{background:var(--ink);color:#fff;padding:22px;display:flex;gap:14px;align-items:center}
+.pf-h h2{margin:0;color:#fff}
+.av{width:56px;height:56px;border-radius:50%;background:var(--gold);color:#1a2236;display:grid;place-items:center;font:700 1.3rem Sora,sans-serif;flex:none}
+.pf-b{padding:12px 22px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}.kv span{color:var(--mute)}
+.pf-f{padding:6px 22px 22px;display:flex;gap:8px;flex-wrap:wrap}
+
+#toast{position:fixed;left:50%;top:70px;transform:translate(-50%,-20px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:11px;opacity:0;pointer-events:none;transition:.2s;z-index:99;font-weight:600}
+#toast.show{opacity:1;transform:translate(-50%,0)}#toast.err{background:var(--red)}
+.login{max-width:380px;margin:12vh auto}
+
+.burger{display:none;background:var(--gold);color:#1a2236;border:0;border-radius:8px;padding:6px 12px;font:700 .9rem "Nunito Sans",sans-serif;cursor:pointer}
+@media(max-width:760px){.burger{display:inline-block}.burger{margin-left:auto}.top-in{position:relative}nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--ink);flex-direction:column;padding:6px 16px 14px;overflow:visible;box-shadow:0 12px 24px rgba(0,0,0,.25)}nav.open{display:flex}nav a{padding:12px;font-size:1rem}}
+@media print{.top,.bar,.dock,.noprint{display:none!important}.tw{max-height:none;border:0}body{background:#fff}}
+@media(max-width:560px){.arow{flex-wrap:wrap}.pa span{width:56px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head>
+<body>
+<header id="top"></header>
+<main>
+<div class="narrow">
+  <h1>Warden details</h1>
+  <p class="sub" style="margin-bottom:18px">Your details for the hostel records at Urmi School, Vadodara.</p>
+  <form id="f" class="card" autocomplete="off">
+    <div class="grid">
+      <label class="f">Full name<input name="name" required></label>
+      <label class="f">Mobile number<input name="mobile" type="tel" inputmode="numeric" required></label>
+      <label class="f">Email<input name="email" type="email"></label>
+      <label class="f">Employee ID<input name="empId"></label>
+      <label class="f">Joining date<input name="joined" type="date"></label>
+      <label class="f">Hostel or block name<input name="hostel"></label>
+    </div>
+    <label class="f">Emergency contact (name and number)<input name="emergency"></label>
+    <label class="f">Notes<textarea name="notes" rows="3"></textarea></label>
+    <button class="btn" id="b">Save details</button>
+  </form>
+</div>
+</main>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, getDocs, doc, getDoc, setDoc, addDoc, deleteDoc, query, where, documentId, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ===== Firebase keys =====
+const firebaseConfig = {
+  apiKey: "AIzaSyBApKwOIjF4pk0PJZBJo7GM8a7a8ECRIxU",
+  authDomain: "chessx-4e0ec.firebaseapp.com",
+  projectId: "chessx-4e0ec",
+  storageBucket: "chessx-4e0ec.firebasestorage.app",
+  messagingSenderId: "888357289080",
+  appId: "1:888357289080:web:5ecdf9890bf09408eac18d",
+  measurementId: "G-XBRF1H45K8"
+};
+// ====================================================================
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ===== shared helpers =====
+const NAV = [
+  ["index.html", "Home"], ["students.html", "Add student"], ["list.html", "Students"],
+  ["att.html", "Attendance"], ["report.html", "Report"], ["warden.html", "Warden details"]
+];
+
+// Call first on every page: draws the top menu.
+function boot(active) {
+  const bar = document.getElementById("top");
+  bar.className = "top";
+  bar.innerHTML = `<div class="top-in"><span class="brand">Warden<b>Desk</b></span>
+    <nav>${NAV.map(([href, t]) => `<a href="${href}" class="${href === active ? "on" : ""}">${t}</a>`).join("")}</nav>
+    <button class="burger" id="bg" aria-label="Open menu">&#9776; Menu</button></div>`;
+  document.getElementById("bg").onclick = () => bar.querySelector("nav").classList.toggle("open");
+  return Promise.resolve();
+}
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const cap = s => (s || "").trim().toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
+const fullName = s => [s.first, s.middle, s.last].filter(Boolean).join(" ");
+// R = Regular, D/BB = DLSS Basketball, D/BM = DLSS Badminton
+const typeCode = s => (s.type === "DLSS" ? (s.sport === "Basketball" ? "D/BB" : "D/BM") : "R");
+const typeLabel = s => (s.type === "DLSS" ? `DLSS (${s.sport})` : "Regular");
+
+const byName = (a, b) => fullName(a).localeCompare(fullName(b), "en", { sensitivity: "base" });
+const sortRoom = l => [...l].sort((a, b) => a.room - b.room || byName(a, b));
+const sortAZ = l => [...l].sort(byName);
+
+async function loadStudents() {
+  const snap = await getDocs(collection(db, "studentdb"));
+  return snap.docs.map(d => ({ id: d.id, ...d.data() }));
+}
+
+const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const fmtDate = iso => (iso ? iso.split("-").reverse().join("-") : "");
+function age(iso) {
+  const d = new Date(iso), n = new Date();
+  let a = n.getFullYear() - d.getFullYear();
+  if (n < new Date(n.getFullYear(), d.getMonth(), d.getDate())) a--;
+  return a;
+}
+
+function toast(msg, kind = "ok") {
+  let t = document.getElementById("toast");
+  if (!t) { t = document.createElement("div"); t.id = "toast"; document.body.append(t); }
+  t.textContent = msg; t.className = "show " + kind;
+  clearTimeout(t._t); t._t = setTimeout(() => (t.className = ""), 2800);
+}
+
+// ===== this page =====
+await boot("warden.html");
+const f = document.getElementById("f"), ref = doc(db, "wardendb", "profile");
+const cur = await getDoc(ref);
+if (cur.exists()) for (const [k, v] of Object.entries(cur.data())) if (f.elements[k] && typeof v === "string") f.elements[k].value = v;
+f.onsubmit = async e => {
+  e.preventDefault();
+  const v = Object.fromEntries(new FormData(f)); v.name = cap(v.name);
+  const b = document.getElementById("b"); b.disabled = true;
+  try { await setDoc(ref, { ...v, updatedAt: serverTimestamp() }, { merge: true }); toast("Details saved"); }
+  catch (err) { toast("Could not save: " + err.message, "err"); }
+  b.disabled = false;
+};
+</script></body></html>
