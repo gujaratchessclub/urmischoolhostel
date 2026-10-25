@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Schedule – Warden Desk</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+<style>:root{--ink:#12264a;--mute:#5a6a85;--paper:#f2f5f9;--line:#d8dfea;--gold:#f2a900;--green:#12805c;--gbg:#dcf2e8;--red:#c23b32;--rbg:#fbe3e0;--r:14px}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "Nunito Sans",system-ui,sans-serif}
+h1,h2,.brand,.rm,.big{font-family:Sora,system-ui,sans-serif}
+h1{font-size:1.75rem;line-height:1.2;margin:.1em 0 .3em;letter-spacing:-.02em}
+h2{font-size:1.15rem;margin:0 0 12px}
+.sub{color:var(--mute);margin:0}
+a{color:var(--ink)}
+
+/* top bar */
+.top{background:var(--ink);position:sticky;top:0;z-index:30}
+.top-in{max-width:1100px;margin:auto;display:flex;align-items:center;gap:14px;padding:10px 16px}
+.brand{color:#fff;font-weight:700;white-space:nowrap}.brand b{color:var(--gold)}
+nav{display:flex;gap:2px;flex:1;overflow-x:auto}
+nav a{color:#c4d0e6;text-decoration:none;padding:6px 12px;border-radius:8px;white-space:nowrap;font-size:.94rem}
+nav a:hover{color:#fff}nav a.on{background:rgba(255,255,255,.14);color:#fff}
+.out{background:none;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:8px;padding:5px 12px;cursor:pointer;font:inherit;font-size:.9rem}
+main{max-width:1100px;margin:auto;padding:22px 16px 110px}
+
+/* cards + forms */
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px}
+.narrow{max-width:680px}
+.f{display:block;margin-bottom:16px;font-weight:600;font-size:.93rem}
+.f input,.f textarea,.bar input{display:block;width:100%;margin-top:6px;padding:11px 12px;border:1.5px solid var(--line);border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
+input:focus,textarea:focus{outline:3px solid rgba(242,169,0,.45);border-color:var(--gold)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 16px}
+fieldset{border:0;padding:0;margin:0 0 18px}
+legend{font-weight:600;font-size:.93rem;margin-bottom:8px;padding:0}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pills label{position:relative}
+.pills input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.pills span{display:grid;place-items:center;min-width:50px;height:50px;padding:0 16px;border:2px solid var(--line);border-radius:12px;background:#fff;font-weight:700;transition:.12s}
+.pills input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
+.pills input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.btn{display:inline-flex;align-items:center;justify-content:center;border:0;border-radius:11px;padding:12px 22px;font:inherit;font-weight:700;background:var(--ink);color:#fff;cursor:pointer;text-decoration:none}
+.btn:hover{filter:brightness(1.15)}.btn:disabled{opacity:.5}
+.btn.gold{background:var(--gold);color:#1a2236}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.danger{background:#fff;color:var(--red);border:1.5px solid #efc3bf}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.bar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:14px 0}
+.bar input{margin:0;width:auto;min-width:190px}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:11px;overflow:hidden;background:#fff}
+.seg button{border:0;background:none;padding:10px 16px;font:inherit;font-weight:600;cursor:pointer;color:var(--mute)}
+.seg button.on{background:var(--ink);color:#fff}
+
+/* tables */
+.tw{overflow:auto;border:1px solid var(--line);border-radius:var(--r);background:#fff;max-height:70vh}
+table{border-collapse:separate;border-spacing:0;width:100%}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{background:#e9eef6;font-size:.86rem;color:var(--mute);position:sticky;top:0;z-index:2}
+tr.rs td{border-top:3px solid var(--ink)}
+.lt tbody tr:hover td{background:#f7f9fc}
+.empty{text-align:center;color:var(--mute);padding:30px}
+.rm{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:9px;background:var(--ink);color:#fff;font-weight:700;font-size:.95rem;margin-right:6px}
+.chip{display:inline-block;padding:2px 10px;border-radius:99px;font-weight:700;font-size:.85rem}
+.chip.r{background:#e6ebf4;color:var(--ink)}.chip.d{background:#fff0c9;color:#7a5200}
+.lnk{background:none;border:0;padding:0;font:inherit;font-weight:700;color:var(--ink);text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:4px;cursor:pointer}
+.note{color:var(--mute);font-size:.9rem;margin-top:12px}
+
+/* attendance */
+.arow{display:flex;align-items:center;gap:14px;padding:12px 16px;background:#fff;border:1px solid var(--line);border-radius:12px;margin-bottom:8px}
+.arow.miss{border-color:var(--red);background:#fff8f7}
+.arow .nm{flex:1;font-weight:700}.arow small{display:block;font-weight:400;color:var(--mute)}
+.pa{display:flex;gap:8px}
+.pa label{position:relative}
+.pa input{position:absolute;opacity:0;inset:0;cursor:pointer;margin:0}
+.pa span{display:grid;place-items:center;width:64px;height:48px;border-radius:12px;border:2px solid var(--line);font:700 1.1rem Sora,sans-serif;color:var(--mute);background:#fff}
+.pa .p input:checked+span{background:var(--green);border-color:var(--green);color:#fff}
+.pa .a input:checked+span{background:var(--red);border-color:var(--red);color:#fff}
+.pa input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.dock{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);padding:10px 16px;z-index:25}
+.dock-in{max-width:1100px;margin:auto;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.tally{flex:1;font-weight:700;min-width:180px}
+.tally i{font-style:normal;color:var(--green)}.tally u{text-decoration:none;color:var(--red)}
+
+/* report */
+.pc{text-align:center!important;font-weight:700}
+td.P{color:var(--green);background:var(--gbg)}td.A{color:var(--red);background:var(--rbg)}td.n{color:#b0b9c9}
+.sticky{position:sticky;left:0;background:#fff;z-index:1}
+th.sticky{background:#e9eef6;z-index:3}
+.ft td{background:#e9eef6;font-weight:700}
+.dh{font:700 1rem Sora,sans-serif;color:var(--ink);text-decoration:none}
+
+/* home */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0 24px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:14px 18px}
+.stat .big{font-size:1.9rem;font-weight:700;line-height:1.15}.stat span{color:var(--mute);font-size:.9rem}
+.menu{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin-bottom:14px}
+.tile{display:block;text-decoration:none;background:#fff;border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:var(--r);padding:20px;transition:.15s}
+.tile:hover{transform:translateY(-2px);border-left-color:var(--ink)}
+.tile b{display:block;font:700 1.15rem Sora,sans-serif;margin-bottom:4px}.tile small{color:var(--mute)}
+.tile.sec{border-left-color:var(--line)}
+
+/* profile card */
+dialog{border:0;border-radius:18px;padding:0;width:min(440px,92vw);box-shadow:0 20px 60px rgba(18,38,74,.35);color:var(--ink)}
+dialog::backdrop{background:rgba(18,38,74,.55)}
+.pf-h{background:var(--ink);color:#fff;padding:22px;display:flex;gap:14px;align-items:center}
+.pf-h h2{margin:0;color:#fff}
+.av{width:56px;height:56px;border-radius:50%;background:var(--gold);color:#1a2236;display:grid;place-items:center;font:700 1.3rem Sora,sans-serif;flex:none}
+.pf-b{padding:12px 22px}
+.kv{display:flex;justify-content:space-between;gap:12px;padding:9px 0;border-bottom:1px solid var(--line)}.kv span{color:var(--mute)}
+.pf-f{padding:6px 22px 22px;display:flex;gap:8px;flex-wrap:wrap}
+
+#toast{position:fixed;left:50%;top:70px;transform:translate(-50%,-20px);background:var(--ink);color:#fff;padding:11px 20px;border-radius:11px;opacity:0;pointer-events:none;transition:.2s;z-index:99;font-weight:600}
+#toast.show{opacity:1;transform:translate(-50%,0)}#toast.err{background:var(--red)}
+.login{max-width:380px;margin:12vh auto}
+
+.burger{display:none;background:var(--gold);color:#1a2236;border:0;border-radius:8px;padding:6px 12px;font:700 .9rem "Nunito Sans",sans-serif;cursor:pointer}
+@media(max-width:760px){.burger{display:inline-block}.burger{margin-left:auto}.top-in{position:relative}nav{display:none;position:absolute;top:100%;left:0;right:0;background:var(--ink);flex-direction:column;padding:6px 16px 14px;overflow:visible;box-shadow:0 12px 24px rgba(0,0,0,.25)}nav.open{display:flex}nav a{padding:12px;font-size:1rem}}
+@media print{.top,.bar,.dock,.noprint{display:none!important}.tw{max-height:none;border:0}body{background:#fff}}
+@media(max-width:560px){.arow{flex-wrap:wrap}.pa span{width:56px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+:root{--blue:#1f5fbf;--bbg:#dde9fb}
+.lb{display:block;font-weight:600;font-size:.93rem}
+.dt{position:relative;display:flex;gap:6px;margin-top:6px}
+.dt input[type=text]{margin:0!important;flex:1;min-width:0;width:100%}
+.cal{border:1.5px solid var(--line);background:#fff;border-radius:10px;padding:0 12px;font-size:1.1rem;cursor:pointer}
+.cal:hover{border-color:var(--gold)}
+.dt.bad input[type=text]{border-color:var(--red);background:#fff8f7}
+.dt .dp{position:absolute!important;opacity:0;pointer-events:none;width:1px!important;height:1px!important;margin:0!important;padding:0!important;border:0!important;left:0;bottom:0}
+.bar .dt{margin:0;width:190px}
+.bar .dt input[type=text]{min-width:0}
+.pa span{width:58px}
+.pa .t input:checked+span{background:var(--blue);border-color:var(--blue);color:#fff}
+.arow.cur{outline:3px solid rgba(242,169,0,.6);outline-offset:1px}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-weight:600;margin:6px 0 6px}
+.legend b{display:inline-grid;place-items:center;width:26px;height:26px;border-radius:7px;color:#fff;margin-right:6px;font-family:Sora,sans-serif}
+.tip{color:var(--mute);font-size:.88rem;margin:0 0 12px}
+.chip.o{background:#ffe3c2;color:#8a4b00;margin-left:6px}
+.tally .t{color:var(--blue)}
+td.T{color:var(--blue);background:var(--bbg)}
+.ocard{display:flex;gap:14px;align-items:center;flex-wrap:wrap;background:#fff;border:1px solid var(--line);border-left:6px solid var(--gold);border-radius:12px;padding:12px 16px;margin-bottom:8px}
+.ocard.late{border-left-color:var(--red);background:#fff8f7}
+.ocard .nm{flex:1;min-width:170px;font-weight:700}
+.ocard small{display:block;font-weight:400;color:var(--mute)}
+.el{text-align:right;font-weight:700}.el small{font-weight:400}.late .el{color:var(--red)}
+.pillb{border:1.5px solid var(--line);background:#fff;border-radius:9px;padding:5px 11px;font:600 .85rem "Nunito Sans",sans-serif;cursor:pointer;color:var(--ink)}
+.pillb:hover{border-color:var(--gold)}
+.qk{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+.tabs{display:flex;gap:6px;overflow-x:auto;margin:12px 0;padding-bottom:4px}
+.tab{position:relative;border:1.5px solid var(--line);background:#fff;border-radius:11px;padding:9px 16px;font:700 .95rem "Nunito Sans",sans-serif;cursor:pointer;color:var(--mute);flex:none}
+.tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tab.today::after{content:"";position:absolute;top:5px;right:6px;width:7px;height:7px;border-radius:50%;background:var(--gold)}
+.ent{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:10px 16px;margin-bottom:6px}
+.ent .tm{font:700 1rem Sora,sans-serif;width:90px;flex:none}
+.ent .ti{flex:1;font-weight:600}
+.ent.now{border-left:6px solid var(--gold);background:#fffaf0}
+.ent.next{border-left:6px solid var(--ink)}
+.ent small{color:var(--mute);font-weight:700}
+.mini{background:none;border:0;color:var(--mute);cursor:pointer;font:inherit;font-size:.85rem;padding:5px 8px;border-radius:6px}
+.mini:hover{background:var(--paper);color:var(--ink)}
+.chp{position:relative}
+.chp input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.chp span{display:grid;place-items:center;min-width:52px;height:42px;padding:0 12px;border:2px solid var(--line);border-radius:10px;background:#fff;font-weight:700}
+.chp input:checked+span{background:var(--gold);border-color:var(--gold);color:#1a2236}
+.chp input:focus-visible+span{outline:3px solid var(--ink)}
+.wk{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.wk .dc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.wk .dc.today{border:2px solid var(--gold)}
+.wk h3{margin:0 0 8px;font:700 1rem Sora,sans-serif}
+.wk p{margin:0 0 6px;font-size:.9rem}.wk b{display:block;color:var(--mute);font-size:.8rem}
+.now{background:var(--ink);color:#fff;border-radius:var(--r);padding:16px 20px;margin-bottom:14px;display:flex;gap:28px;flex-wrap:wrap;align-items:center}
+.now b{color:var(--gold);font-family:Sora,sans-serif}.now .btn{margin-left:auto}
+.stat .big.t{color:var(--blue)}
+</style></head>
+<body>
+<header id="top"></header>
+<main>
+  <h1>Daily schedule</h1>
+  <p class="sub">Set it once, read it any time. Add an activity to Mon–Fri, Sat, Sun or any days you choose.</p>
+
+  <form id="f" class="card noprint" autocomplete="off" style="margin-top:16px">
+    <h2 id="ft">Add activity</h2>
+    <div class="grid">
+      <label class="f">Time<input type="time" name="t" required></label>
+      <label class="f">Activity<input name="title" list="acts" required placeholder="e.g. Study hour"><datalist id="acts">
+        <option value="Wake up"><option value="Morning exercise"><option value="Bath and ready"><option value="Breakfast"><option value="School"><option value="Lunch">
+        <option value="Rest"><option value="Practice"><option value="Snacks"><option value="Study hour"><option value="Roll call"><option value="Dinner"><option value="Free time"><option value="Lights out"></datalist></label>
+    </div>
+    <fieldset><legend>Days</legend>
+      <div class="pills" id="chips"></div>
+      <div class="qk"><button type="button" class="pillb" data-p="wk">Mon–Fri</button><button type="button" class="pillb" data-p="sat">Sat</button><button type="button" class="pillb" data-p="sun">Sun</button><button type="button" class="pillb" data-p="all">All 7 days</button></div>
+    </fieldset>
+    <div class="row"><button class="btn" id="sb">Add to schedule</button><button type="button" class="btn ghost" id="cx" hidden>Cancel edit</button></div>
+  </form>
+
+  <div class="bar noprint">
+    <div class="seg"><button id="v-day" class="on">Day view</button><button id="v-wk">Week view</button></div>
+    <button class="btn ghost" onclick="print()" style="margin-left:auto">Print</button>
+  </div>
+  <div class="tabs noprint" id="tabs"></div>
+  <div id="view"></div>
+</main>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, initializeFirestore, persistentLocalCache, persistentMultipleTabManager, collection, getDocs, doc, getDoc, setDoc, addDoc, updateDoc, deleteDoc, onSnapshot, query, where, documentId, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// ===== Firebase keys =====
+const firebaseConfig = {
+  apiKey: "AIzaSyBApKwOIjF4pk0PJZBJo7GM8a7a8ECRIxU",
+  authDomain: "chessx-4e0ec.firebaseapp.com",
+  projectId: "chessx-4e0ec",
+  storageBucket: "chessx-4e0ec.firebasestorage.app",
+  messagingSenderId: "888357289080",
+  appId: "1:888357289080:web:5ecdf9890bf09408eac18d",
+  measurementId: "G-XBRF1H45K8"
+};
+// =========================
+const app = initializeApp(firebaseConfig);
+let db;
+// Offline cache: pages open instantly and keep working on weak hostel Wi-Fi.
+try { db = initializeFirestore(app, { localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }) }); }
+catch (e) { db = getFirestore(app); }
+const C = { stu: "studentdb", att: "attendencedb", ward: "wardendb", out: "outdb", sch: "scheduledb" };
+
+// ===== shared helpers =====
+const $ = id => document.getElementById(id);
+const NAV = [["index.html", "Home"], ["students.html", "Add student"], ["list.html", "Students"], ["att.html", "Attendance"],
+  ["out.html", "Out register"], ["schedule.html", "Schedule"], ["report.html", "Report"], ["warden.html", "Warden details"]];
+
+function boot(active) {
+  const bar = $("top");
+  bar.className = "top";
+  bar.innerHTML = `<div class="top-in"><span class="brand">Warden<b>Desk</b></span>
+    <nav>${NAV.map(([href, t]) => `<a href="${href}" class="${href === active ? "on" : ""}">${t}</a>`).join("")}</nav>
+    <button class="burger" id="bg" aria-label="Open menu">&#9776; Menu</button></div>`;
+  $("bg").onclick = () => bar.querySelector("nav").classList.toggle("open");
+}
+
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const cap = s => (s || "").trim().toLowerCase().replace(/(^|[\s'-])(\p{L})/gu, (m, a, b) => a + b.toUpperCase());
+const fullName = s => [s.first, s.middle, s.last].filter(Boolean).join(" ");
+// R = Regular, D/BB = DLSS Basketball, D/BM = DLSS Badminton
+const typeCode = s => (s.type === "DLSS" ? (s.sport === "Basketball" ? "D/BB" : "D/BM") : "R");
+const typeLabel = s => (s.type === "DLSS" ? `DLSS (${s.sport})` : "Regular");
+const byName = (a, b) => fullName(a).localeCompare(fullName(b), "en", { sensitivity: "base" });
+const sortRoom = l => [...l].sort((a, b) => a.room - b.room || byName(a, b));
+const sortAZ = l => [...l].sort(byName);
+
+const today = () => new Date(Date.now() - new Date().getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+const dmy = iso => (iso ? iso.split("-").reverse().join("/") : "");
+const fmtDate = dmy;
+function age(iso) {
+  const d = new Date(iso), n = new Date();
+  let a = n.getFullYear() - d.getFullYear();
+  if (n < new Date(n.getFullYear(), d.getMonth(), d.getDate())) a--;
+  return a;
+}
+const nowHM = () => { const d = new Date(); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
+const t12 = t => { const [h, m] = t.split(":").map(Number); return ((h % 12) || 12) + ":" + String(m).padStart(2, "0") + " " + (h < 12 ? "AM" : "PM"); };
+const clock = ms => new Date(ms).toLocaleTimeString("en-IN", { hour: "numeric", minute: "2-digit", hour12: true }).toUpperCase();
+const dur = ms => { const m = Math.max(0, Math.round(ms / 60000)); return m >= 60 ? Math.floor(m / 60) + "h " + (m % 60) + "m" : m + "m"; };
+function nowNext(list) { // list sorted by time "HH:MM"
+  const n = nowHM(); let now = null, next = null;
+  for (const e of list) { if (e.t <= n) now = e; else { next = e; break; } }
+  return { now, next };
+}
+
+function toast(msg, kind = "ok") {
+  let t = $("toast");
+  if (!t) { t = document.createElement("div"); t.id = "toast"; document.body.append(t); }
+  t.textContent = msg; t.className = "show " + kind;
+  clearTimeout(t._t); t._t = setTimeout(() => (t.className = ""), 3000);
+}
+
+// Live data (opens instantly from the offline cache, then updates)
+const watchStudents = cb => onSnapshot(collection(db, C.stu), s => cb(s.docs.map(d => ({ id: d.id, ...d.data() }))),
+  e => toast("Could not load students: " + e.message, "err"));
+const watchOuts = cb => onSnapshot(query(collection(db, C.out), where("status", "==", "out")),
+  s => cb(s.docs.map(d => ({ id: d.id, ...d.data() }))), () => {});
+
+// Date box: type 25062012 and it becomes 25/06/2012, or tap the calendar button.
+function parseDMY(t) {
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec((t || "").trim()); if (!m) return null;
+  const d = +m[1], mo = +m[2], y = +m[3], dt = new Date(y, mo - 1, d);
+  if (y < 1900 || dt.getFullYear() !== y || dt.getMonth() !== mo - 1 || dt.getDate() !== d) return null;
+  return `${m[3]}-${m[2]}-${m[1]}`;
+}
+function fmtTyped(raw, back) {
+  const d = raw.replace(/\D/g, "").slice(0, 8);
+  if (d.length > 4) return d.slice(0, 2) + "/" + d.slice(2, 4) + "/" + d.slice(4);
+  if (d.length > 2) return d.slice(0, 2) + "/" + d.slice(2) + (d.length === 4 && !back ? "/" : "");
+  if (d.length === 2 && !back) return d + "/";
+  return d;
+}
+function mkDate(host, o = {}) {
+  host = typeof host === "string" ? $(host) : host;
+  host.classList.add("dt");
+  host.innerHTML = `<input type="text" inputmode="numeric" placeholder="dd/mm/yyyy" maxlength="10" autocomplete="off"><button type="button" class="cal" aria-label="Pick from calendar">&#128197;</button><input type="date" class="dp" tabindex="-1" aria-hidden="true">`;
+  const [tx, btn, dp] = host.children;
+  if (o.max) dp.max = o.max; if (o.min) dp.min = o.min;
+  const api = {
+    el: tx,
+    get() { const v = parseDMY(tx.value); return v && (!o.max || v <= o.max) && (!o.min || v >= o.min) ? v : null; },
+    set(iso) { tx.value = dmy(iso); dp.value = iso || ""; host.classList.remove("bad"); }
+  };
+  tx.addEventListener("input", e => {
+    tx.value = fmtTyped(tx.value, (e.inputType || "").startsWith("delete"));
+    if (tx.value.length === 10) {
+      const v = api.get(); host.classList.toggle("bad", !v);
+      if (v) { dp.value = v; o.onChange && o.onChange(v); }
+    } else host.classList.remove("bad");
+  });
+  tx.addEventListener("blur", () => host.classList.toggle("bad", tx.value !== "" && !api.get()));
+  btn.onclick = () => { dp.value = api.get() || ""; try { dp.showPicker(); } catch (e) { dp.click(); } };
+  dp.onchange = () => { if (dp.value) { api.set(dp.value); o.onChange && o.onChange(dp.value); } };
+  return api;
+}
+
+// Enter jumps to the next box; Enter in the last box saves.
+function fastEnter(form) {
+  form.addEventListener("keydown", e => {
+    if (e.key !== "Enter" || e.target.tagName !== "INPUT" || ["submit", "button", "radio", "checkbox", "date"].includes(e.target.type)) return;
+    const f = [...form.querySelectorAll("input:not([type=radio]):not([type=checkbox]):not(.dp):not(.cal),textarea")].filter(x => !x.closest("[hidden]") && !x.disabled);
+    const i = f.indexOf(e.target);
+    if (i > -1 && i < f.length - 1) { e.preventDefault(); f[i + 1].focus(); }
+  });
+}
+
+// ===== this page =====
+boot("schedule.html");
+const ORDER = [1, 2, 3, 4, 5, 6, 0], DN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], FULL = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const ref = doc(db, C.sch, "weekly"), f = $("f"), tod = new Date().getDay();
+let days = {}, view = tod, mode = "day", editing = null, sel = new Set([1, 2, 3, 4, 5]);
+fastEnter(f);
+onSnapshot(ref, s => { days = s.exists() ? s.data().days || {} : {}; render(); }, e => toast("Could not load: " + e.message, "err"));
+setInterval(render, 60000);
+
+function chips() {
+  $("chips").innerHTML = ORDER.map(d => `<label class="chp"><input type="checkbox" value="${d}" ${sel.has(d) ? "checked" : ""}><span>${DN[d]}</span></label>`).join("");
+}
+$("chips").onchange = e => { e.target.checked ? sel.add(+e.target.value) : sel.delete(+e.target.value); };
+document.querySelectorAll("[data-p]").forEach(b => b.onclick = () => {
+  sel = new Set({ wk: [1, 2, 3, 4, 5], sat: [6], sun: [0], all: [0, 1, 2, 3, 4, 5, 6] }[b.dataset.p]); chips();
+});
+chips();
+
+const list = d => [...(days[d] || [])].sort((a, b) => a.t.localeCompare(b.t));
+function render() {
+  $("tabs").innerHTML = ORDER.map(d => `<button class="tab ${d === view ? "on" : ""} ${d === tod ? "today" : ""}" data-d="${d}">${DN[d]}</button>`).join("");
+  $("tabs").hidden = mode === "wk";
+  if (mode === "wk") {
+    $("view").innerHTML = `<div class="wk">${ORDER.map(d => `<div class="dc ${d === tod ? "today" : ""}"><h3>${FULL[d]}</h3>${list(d).map(e => `<p><b>${t12(e.t)}</b>${esc(e.title)}</p>`).join("") || '<p style="color:var(--mute)">Nothing yet</p>'}</div>`).join("")}</div>`;
+    return;
+  }
+  const l = list(view), { now, next } = view === tod ? nowNext(l) : {};
+  $("view").innerHTML = `<h2>${FULL[view]}${view === tod ? " (today)" : ""}</h2>` + (l.length ? l.map(e => `
+    <div class="ent ${now && now.id === e.id ? "now" : next && next.id === e.id ? "next" : ""}">
+      <span class="tm">${t12(e.t)}</span><span class="ti">${esc(e.title)} ${now && now.id === e.id ? "<small>NOW</small>" : next && next.id === e.id ? "<small>NEXT</small>" : ""}</span>
+      <button class="mini noprint" data-e="${e.id}">Edit</button><button class="mini noprint" data-x="${e.id}">Delete</button></div>`).join("")
+    : `<div class="card empty">No activities for ${FULL[view]}. Add one above.</div>`);
+}
+$("tabs").onclick = e => { const b = e.target.closest(".tab"); if (b) { view = +b.dataset.d; render(); } };
+$("v-day").onclick = () => setMode("day"); $("v-wk").onclick = () => setMode("wk");
+function setMode(m) { mode = m; $("v-day").classList.toggle("on", m === "day"); $("v-wk").classList.toggle("on", m === "wk"); render(); }
+
+const save = () => Promise.race([setDoc(ref, { days, updatedAt: serverTimestamp() }), new Promise(r => setTimeout(r, 2500))]);
+$("view").onclick = async e => {
+  const x = e.target.closest("[data-x]"), ed = e.target.closest("[data-e]");
+  if (x && confirm("Delete this activity?")) {
+    days[view] = (days[view] || []).filter(a => a.id !== x.dataset.x); render();
+    try { await save(); toast("Deleted"); } catch (err) { toast("Could not delete: " + err.message, "err"); }
+  }
+  if (ed) {
+    const a = (days[view] || []).find(z => z.id === ed.dataset.e); if (!a) return;
+    editing = { day: view, id: a.id }; f.elements.t.value = a.t; f.elements.title.value = a.title;
+    sel = new Set([view]); chips(); $("ft").textContent = "Edit activity (" + FULL[view] + ")"; $("sb").textContent = "Update"; $("cx").hidden = false;
+    f.scrollIntoView({ behavior: "smooth" }); f.elements.title.focus();
+  }
+};
+function endEdit() { editing = null; $("ft").textContent = "Add activity"; $("sb").textContent = "Add to schedule"; $("cx").hidden = true; }
+$("cx").onclick = () => { endEdit(); f.reset(); };
+
+f.onsubmit = async e => {
+  e.preventDefault();
+  const t = f.elements.t.value, title = f.elements.title.value.trim();
+  if (!sel.size) return toast("Select at least one day.", "err");
+  if (editing) days[editing.day] = (days[editing.day] || []).filter(a => a.id !== editing.id);
+  for (const d of sel) {
+    const arr = days[d] = days[d] || [];
+    if (!arr.some(a => a.t === t && a.title.toLowerCase() === title.toLowerCase())) arr.push({ id: Math.random().toString(36).slice(2, 9), t, title });
+    arr.sort((a, b) => a.t.localeCompare(b.t));
+  }
+  render();
+  try { await save(); toast(editing ? "Updated" : "Added to " + sel.size + " day(s)"); } catch (err) { return toast("Could not save: " + err.message, "err"); }
+  const was = editing; endEdit();
+  f.elements.title.value = ""; f.elements.t.value = ""; f.elements.t.focus();
+  if (was) { sel = new Set([1, 2, 3, 4, 5]); chips(); }
+};
+</script></body></html>
